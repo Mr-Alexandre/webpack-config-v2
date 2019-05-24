@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --mode development",
-    "server": "webpack --watch --mode production --open",
+    "prod": "webpack-dev-server --watch --mode production --open",
     "diagrams": "npx arkit src/ -o arkit.svg",
     "api": "node server"
   },
