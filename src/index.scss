@@ -6,7 +6,8 @@
 @import 'default/normalize';
 @import 'default/util';
 @import 'default/animation';
-@import 'default/inline-grid';
-
+/*Grid*/
+//@import 'default/inline-grid';
+@import 'default/flexbox-grid';
 
 @import './components/exanple/example';
