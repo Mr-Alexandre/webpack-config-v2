@@ -1,9 +1,9 @@
-.gc-space-between{
+.space-between-inline{
     /*WARNING: This method only works with uncompressed HTML and requires a fixed height on the container and not work with tag ('a', 'span') */
     text-align: justify;
     font-size: 0.04px;
-
     line-height: 0;
+
     &::after{
         content: "";
         display: inline-block;
@@ -14,7 +14,7 @@
         line-height: normal;
     }
 }
-.gc-child-horizontal-center{
+.child-horizontal-center{
     & > :nth-child(1n + 1) {
         display: inline-block;
         margin-top: 0;

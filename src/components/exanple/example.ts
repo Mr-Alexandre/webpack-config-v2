@@ -1,4 +1,4 @@
-import axios, {AxiosPromise, AxiosResponse} from 'axios';
+import axios, {AxiosPromise, AxiosResponse, AxiosError} from 'axios';
 
 export interface Response extends AxiosResponse{}
 
@@ -20,6 +20,10 @@ export default class Example {
         })
         .then((data: Response) => {
             this.outElem.innerHTML = data.data;
+        })
+        .catch( (error: Error) => {
+            this.outElem.innerHTML = error.message;
+            this.outElem.style.color = 'red';
         })
     }
 }
