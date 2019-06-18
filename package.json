@@ -1,6 +1,6 @@
 {
   "name": "webpack-config-v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Webpack configuration - TypeScript, Pug, SASS",
   "main": "main.js",
   "scripts": {

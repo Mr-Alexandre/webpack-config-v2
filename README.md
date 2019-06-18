@@ -62,3 +62,4 @@ $ npm run diagrams
 
 ## Releases
 - v1.0.0 -- Initial release
+- v1.0.1 -- hotfix: when create file with extension not '.pug' in 'pages' folder, files processed by the wrong loader
