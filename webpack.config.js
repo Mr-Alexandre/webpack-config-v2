@@ -27,7 +27,11 @@ function recursiveSearchFile(folderPath, folderName) {
         let pathToContent = path.join(__dirname, folderPath, item);
 
         if (fs.lstatSync(pathToContent).isFile()) {
-            collectionHtmlWebpackPlugin.push(generateNewHtmlWebpackPlugin(folderName, item, folderPath));
+            const parts = item.split('.');
+            const extension = parts[1];
+            if (extension == 'pug') {
+                collectionHtmlWebpackPlugin.push(generateNewHtmlWebpackPlugin(folderName, item, folderPath));
+            }
         }
         if (fs.lstatSync(pathToContent).isDirectory()) {
             let newArr = recursiveSearchFile(`${folderPath}/${item}`, `${folderName}/${item}`);

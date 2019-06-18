@@ -1,12 +1,12 @@
 {
   "name": "webpack-config-v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Webpack configuration - TypeScript, Pug, SASS",
   "main": "main.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --mode development",
-    "server": "webpack --watch --mode production --open",
+    "prod": "webpack-dev-server --watch --mode production --open",
     "diagrams": "npx arkit src/ -o arkit.svg",
     "api": "node server"
   },
