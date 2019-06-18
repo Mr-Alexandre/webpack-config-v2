@@ -68,7 +68,7 @@ block body
                 .col-lg-3.col-md-6.col-xs-12
                     .card lg-3 md-6 xs-12
         h4 space between *(work only uncompressed HTML)
-        .row.space-between-inline.space-between-flex
+        .row.align-content.align-content-between
             .col-xs-1
                 .card Text
             .col-xs-1
@@ -107,6 +107,103 @@ block body
                     .card Left
                 .col-md-3.col-md-pull-9
                     .card Right
+        h4 align-content
+            h5 Start
+            .row.align-content.align-content-start
+                .col-md-3
+                    .card(style='height: 100px;')
+                .col-md-3
+                    .card(style='height: 200px;')
+                .col-md-3
+                    .card(style='height: 250px;')
+                .col-md-3
+                    .card(style='height: 150px;')
+            h5 End
+            .row.align-content-end
+                .col-md-3
+                    .card(style='height: 100px;')
+                .col-md-3
+                    .card(style='height: 200px;')
+                .col-md-3
+                    .card(style='height: 250px;')
+                .col-md-3
+                    .card(style='height: 150px;')
+            h5 Center
+            .row.align-content-center
+                .col-md-3
+                    .card(style='height: 100px;')
+                .col-md-3
+                    .card(style='height: 200px;')
+                .col-md-3
+                    .card(style='height: 250px;')
+                .col-md-3
+                    .card(style='height: 150px;')
+            h5 Stretch
+            .row.align-content-stretch
+                .col-md-3
+                    .card text
+                .col-md-3
+                    .card Whole every miles as tiled at seven or. Wished he entire esteem mr oh by. Possible bed you pleasure civility boy elegance ham. He prevent request
+                        |by if in pleased. Picture too and concern has was comfort. Ten difficult resembled eagerness nor
+                .col-md-3
+                    .card text
+                .col-md-3
+                    .card text
+            h5 Baseline
+            .row.align-content-baseline
+                .col-md-3
+                    .card(style='height: 100px; padding-top: 20px') text
+                .col-md-3
+                    .card(style='height: 200px;') Text text
+                .col-md-3
+                    .card(style='height: 250px; padding-top: 40px') text
+                .col-md-3
+                    .card(style='height: 150px;') Text
+        h4 width evenly
+        .row.align-content-evenly
+            .col
+                .card text
+            .col
+                .card Whole every miles as tiled at seven or. Wished he entire esteem mr oh by. Possible bed you pleasure civility boy elegance ham. He prevent request
+                    | by if in pleased. Picture too and concern has was comfort. Ten difficult resembled eagerness nor
+            .col
+                .card text
+            .col
+                .card text
+        h4 width evenly no gutters
+        .row.align-content-evenly.row_no-gutters
+            .col
+                .card text
+            .col
+                .card Whole every miles as tiled at seven or. Wished he entire esteem mr oh by
+            .col
+                .card text
+            .col
+                .card Whole every miles as tiled at seven or. Wished he entire esteem mr oh by.
+            .col
+                .card text
+            .col
+                .card text
+        h4 Example col-2 to col-10
+            .row.align-content-evenly
+                .col-2
+                    .card .col-2
+                .col
+                    .card .col
+                .col-3
+                    .card .col-3
+                .col
+                    .card .col
+                .col-4
+                    .card .col-4
+                .col
+                    .card .col-2
+            .row.align-content-evenly
+                .col-2
+                    .card .col-2
+                .col-2
+                    .card .col-2
+
         ul
             h4 Example
             li

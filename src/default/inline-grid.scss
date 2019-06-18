@@ -17,7 +17,6 @@ $breakpoints-container: (
 );
 $columns: 12;
 $gap: 5;
-$mode: 'inline'; //flex
 
 @mixin clearfix() {
   &:before,
@@ -120,24 +119,9 @@ $mode: 'inline'; //flex
 .row {
   font-size: 0;
   @include make-row;
-}
-.row * {
-  font-size: 16px;
-}
-.space-between-inline{
-  /*WARNING: This method only works with uncompressed HTML and requires a fixed height on the container and not work with tag ('a', 'span') */
-  text-align: justify;
-  font-size: 0.04px;
-  line-height: 0;
 
-  &::after{
-    content: "";
-    display: inline-block;
-    width: 100%;
-  }
-  & > :nth-child(n + 1){
-    display: inline-block;
-    line-height: normal;
+  & > :nth-child(n + 1) {
+    font-size: medium;
   }
 }
 .row_no-gutters {
@@ -148,6 +132,91 @@ $mode: 'inline'; //flex
     padding-right: 0;
     padding-left: 0;
   }
+  & .col {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+@mixin create-col-table($class: 'col', $inc: 10) {
+  $cols: '';
+  @for $i from 0 through $inc {
+    @if $i > 1 {
+      $name: '.col-#{$i}, ';
+      #{$name} {
+        width: percentage(1*$i)!important;
+      }
+      $cols: $cols + $name;
+    }
+  }
+  #{$cols} {
+    padding-right: #{$gap / 2}px;
+    padding-left: #{$gap / 2}px;
+  }
+}
+.col{
+  padding-right: #{$gap / 2}px;
+  padding-left: #{$gap / 2}px;
+}
+@include create-col-table()
+
+.align-content{
+  /*WARNING: This method only works with uncompressed HTML and requires a fixed height on the container and not work with tag ('a', 'span') */
+  font-size: 0;
+
+  &::after{
+    content: ""!important;
+    display: inline-block!important;
+    width: 100%!important;
+  }
+  & > :nth-child(n + 1){
+    display: inline-block;
+    font-size: medium;
+  }
+}
+.align-content-start{
+  & > :nth-child(n + 1){
+    vertical-align: top;
+  }
+}
+.align-content-end{
+  & > :nth-child(n + 1){
+    vertical-align: bottom;
+  }
+}
+.align-content-center{
+  & > :nth-child(n + 1){
+    vertical-align: middle;
+  }
+}
+.align-content-stretch{
+  display: table;
+  height: 100%;
+  width: 100%;
+  & > :nth-child(n + 1) {
+    vertical-align: top;
+    display: table-cell;
+    height:100%;
+    > :nth-child(n + 1) {
+      height: 100%;
+    }
+  }
+}
+.align-content-evenly{
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  & > :nth-child(n + 1) {
+    display: table-cell;
+    width: 100%;
+  }
+}
+.align-content-baseline{
+  & > :nth-child(n + 1){
+    vertical-align: baseline;
+  }
+}
+.align-content-between{
+  text-align: justify;
 }
 
 @include create-columns()
