@@ -1,11 +1,25 @@
-import './index.pug';
+// CSS
 import './index.scss';
 
-import Example from './components/exanple/example';
 
-let exampleBtn = document.getElementById('exapmleSendRequest');
-if (exampleBtn) {
-    exampleBtn.onclick = ()=> {
-        new Example('http://127.0.0.1:8181/test','POST',document.getElementById('examplePostRequest')).send('');
-    }
-}
+// tools
+import './scripts/tools/polyfill.js';
+
+
+// Libraries
+
+
+// Modules
+import './scripts/modules/index';
+
+
+// Scenario
+import './scripts/scenario/index';
+
+
+// Components
+import './components/exanple';
+
+
+// Pages
+// import './pages/main';

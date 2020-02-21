@@ -1,0 +1,26 @@
+@mixin scroll-primary() {
+  /* width */
+  &::-webkit-scrollbar {
+    width: 2px;
+    position: absolute;
+  }
+  scrollbar-color: $color-main transparent;
+  scrollbar-width: thin;
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: $color-gray;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: $color-main;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+  }
+}
+
+.#{generatePrefix($prefixObject)}scroll {
+  &_primary {
+    @include scroll-primary();
+  }
+}

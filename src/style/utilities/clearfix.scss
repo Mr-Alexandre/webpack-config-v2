@@ -1,0 +1,3 @@
+.#{generatePrefix($prefixUtilities)}clearfix {
+  @include clearfix();
+}

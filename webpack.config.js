@@ -4,22 +4,27 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ip = require('ip');
 const fs = require('fs');
 
 // Our function that generates our html plugins
-function generateNewHtmlWebpackPlugin(directory, item, templateDir) {
+function generateNewHtmlWebpackPlugin(saveFolder, directory, item, templateDir, HtmlWebpackPluginOptions = {}) {
     const parts = item.split('.');
     const name = parts[0];
     const extension = parts[1];
+    const options = {
+        ...{
+            filename: `./${saveFolder}${directory}/${name}.html`,
+            template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
+        }, ...HtmlWebpackPluginOptions
+    };
 
-    return new HtmlWebpackPlugin({
-        filename: `./pages${directory}/${name}.html`,
-        template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`)
-    })
+    return new HtmlWebpackPlugin(options);
 }
 
-function recursiveSearchFile(folderPath, folderName) {
+function recursiveSearchFile(folderPath, folderName, saveFolder, HtmlWebpackPluginOptions) {
     // Read files in template directory
     let folderContents = fs.readdirSync(path.resolve(__dirname, folderPath));
     let collectionHtmlWebpackPlugin = [];
@@ -29,34 +34,41 @@ function recursiveSearchFile(folderPath, folderName) {
         if (fs.lstatSync(pathToContent).isFile()) {
             const parts = item.split('.');
             const extension = parts[1];
-            if (extension == 'pug') {
-                collectionHtmlWebpackPlugin.push(generateNewHtmlWebpackPlugin(folderName, item, folderPath));
+            if (extension === 'pug') {
+                collectionHtmlWebpackPlugin.push(generateNewHtmlWebpackPlugin(saveFolder, folderName, item, folderPath, HtmlWebpackPluginOptions));
             }
         }
         if (fs.lstatSync(pathToContent).isDirectory()) {
-            let newArr = recursiveSearchFile(`${folderPath}/${item}`, `${folderName}/${item}`);
+            let newArr = recursiveSearchFile(`${folderPath}/${item}`, `${folderName}/${item}`, saveFolder, HtmlWebpackPluginOptions);
             collectionHtmlWebpackPlugin = [...collectionHtmlWebpackPlugin, ...newArr]
         }
     });
     return collectionHtmlWebpackPlugin;
 }
 
-function generateHtmlPlugins (templateDir) {
-    return recursiveSearchFile(templateDir, '');
+function generateHtmlPlugins (templateDir, saveFolder, HtmlWebpackPluginOptions) {
+    return recursiveSearchFile(templateDir, '', saveFolder, HtmlWebpackPluginOptions);
 }
 
 // Call our function on our views directory.
-let htmlPlugins = generateHtmlPlugins('./src/pages');
+//Example
+// let htmlPluginsAjaxTemplate = generateHtmlPlugins('./src/ajax-template', 'ajax-template', {
+//     inject: false,
+//     minify: {
+//         removeComments: true,
+//     }
+// });
+let htmlPlugins = generateHtmlPlugins('./src/pages', 'pages');
 
 module.exports = (env, argv) => ({
-    entry: './src/main.ts',
-    // output: {
-    //     filename: 'index.js',
-    //     path: path.resolve(__dirname, './dist'),
-    //     publicPath: 'dist/'
-    // },
+    entry: {
+        index: './src/main.ts',
+    },
+    output: {
+        filename: argv.mode === 'production' ? '[name].[contenthash].js' : '[name].js',
+    },
     devServer: {
-        // index: '../index.html',
+        host: ip.address(),
         port: 8080,
         open: true,
         hot: true,
@@ -68,7 +80,22 @@ module.exports = (env, argv) => ({
         // inline: true,
         // progress: true,
         // compress: true,
-        
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    chunks: "all",
+                }
+            }
+        },
+        minimizer: [
+            new TerserPlugin({
+                parallel: true,
+            }),
+        ],
     },
     module: {
         rules: [
@@ -91,7 +118,10 @@ module.exports = (env, argv) => ({
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader"
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
                 }
             },
             {
@@ -102,7 +132,12 @@ module.exports = (env, argv) => ({
                     {
                         loader: 'html-loader',
                         options: {
-                            attrs: ['img:src', ':src']
+                            attributes: ['img:src', ':src'],
+                            interpolate: 'require',
+
+                            minimize: {
+                                removeComments: true,
+                            },
                         }
                     },
                     {
@@ -119,9 +154,6 @@ module.exports = (env, argv) => ({
                     argv.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
                     {
                         loader: 'css-loader',
-                        options: {
-                          minimize: true,
-                        }
                     }
                 ]
             },
@@ -141,9 +173,7 @@ module.exports = (env, argv) => ({
                         loader: 'postcss-loader',
                         options: {
                             plugins: [
-                                autoprefixer({
-                                    browsers:['ie >= 9', 'last 4 version']
-                                })
+                                autoprefixer()
                             ]
                         }
                     },
@@ -156,31 +186,46 @@ module.exports = (env, argv) => ({
                 ]
             },
             {
-                test: /\.(ttf|otf|eot|svg|woff(2)(\?[a-z0-9]+)??)$/,
+                test: /\.(ttf|otf|eot|woff(2)(\?[a-z0-9]+)??)$/,
                 exclude: /node_modules/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             // outputPath: 'fonts/',
-                            name: '[path][name].[ext]',
+                            name: argv.mode === 'development' ? '[path][name].[ext]' : 'fonts/[name].[ext]',
                             context: 'src',
                             publicPath: '/',
                         }
                     }
                 ]
             },
+            // {
+            //     test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+            //     use: [
+            //         {
+            //             loader: 'file-loader',
+            //             options: {
+            //                 // name: '[path][name].[ext]',
+            //                 context: 'src',
+            //                 publicPath: '/',
+            //                 // useRelativePath: true,
+            //                 name: '[path][name].[ext]',
+            //                 limit: false,
+            //             }
+            //         }
+            //     ]
+            // },
             {
                 test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
                 use: [
                     {
-                        loader: 'file-loader',
+                        loader: 'url-loader',
                         options: {
-                            // name: '[path][name].[ext]',
+                            name: '[path][name].[ext]',
                             context: 'src',
                             publicPath: '/',
-                            // useRelativePath: true,
-                            name: '[path][name].[ext]',
+                            limit: 200,
                         }
                     }
                 ]
@@ -195,11 +240,12 @@ module.exports = (env, argv) => ({
             inject: true
         }),
         new MiniCssExtractPlugin({
-            filename: "index.css"
+            filename: argv.mode === 'production' ? '[name].[contenthash].css' : '[name].css',
         }),
-        new CopyWebpackPlugin([
-            
-        ])
+        // new CopyWebpackPlugin([
+        //     {from: './src/media', to: './media'},
+        // ])
+        // new BundleAnalyzerPlugin()
     ].concat(htmlPlugins),
     resolve: {
         extensions: [ '.tsx', '.ts', '.js' ]

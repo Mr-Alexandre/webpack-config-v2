@@ -1,0 +1,18 @@
+@mixin media-between($form, $to) {
+  @media (min-width: $form + "px") and (max-width: $to + "px") {
+    @content;
+  }
+}
+
+@mixin media-big($point) {
+  @media screen and (min-width: $point + "px") {
+    @content;
+  }
+}
+
+@mixin media-min($point) {
+  @media screen and (max-width: $point + "px") {
+    @content;
+  }
+}
+

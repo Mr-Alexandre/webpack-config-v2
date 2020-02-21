@@ -1,0 +1,281 @@
+extends ../../base
+
+block title
+    title Example
+
+block body
+    .o-container
+        section
+            h1 Text and text formatting
+            .o-row
+                .o-col-xs-12
+                    h1 Heading 1
+                    h2 Heading 2
+                    h3 Heading 3
+                    h4 Heading 4
+                    h5 Heading 5
+                    h6 Heading 6
+                    p paragraph
+                    a(href='#') link
+                    p text formatting: &nbsp &nbsp
+                        i i tag &nbsp
+                        b b tag &nbsp
+                        strong strong tag &nbsp
+                        em em tag &nbsp
+                        mark mark tag &nbsp
+                        small small tag &nbsp
+                        big big tag &nbsp
+                        del del tag &nbsp
+                        ins ins tag &nbsp
+                        sub sub tag &nbsp
+                        sup sup tag &nbsp
+                        abbr abbr tag &nbsp
+                        tt tt tag
+                    abbr abbr tag &nbsp
+                    acronym acronym tag &nbsp
+                    address address tag
+                    bdo bdo tag
+                    blockquote blockquote tag
+                    cite city tag <br>
+                    q q tag &nbsp
+                    code &nbsp code tag &nbsp
+                    output &nbsp output tag &nbsp
+                    kbd &nbsp kbd tag &nbsp
+                    samp &nbsp samp tag &nbsp
+                    var &nbsp var tag &nbsp
+                    pre pre tag
+                    time time tag
+                h1 Lists
+                .o-row.o-col-xs-12
+                    .o-col-xs-3
+                        ol
+                            li text
+                            li text
+                            li text
+                            ol
+                                li text
+                                li text
+                            li text
+                    .o-col-xs-3
+                        ul
+                            li text
+                            li text
+                            ul
+                                li text
+                                li text
+                                li text
+                            li text
+                    .o-col-xs-3
+                        dl
+                            dt title
+                            dd content
+                            dt title
+                            dd content
+
+
+        section
+            h1 Grid on inline-block
+            .o-row
+                .o-col-xs-1
+                    .c-card-example 1
+                .o-col-xs-1
+                    .c-card-example 2
+                .o-col-xs-1
+                    .c-card-example 3
+                .o-col-xs-1
+                    .c-card-example 4
+                .o-col-xs-1
+                    .c-card-example 5
+                .o-col-xs-1
+                    .c-card-example 6
+                .o-col-xs-1
+                    .c-card-example 7
+                .o-col-xs-1
+                    .c-card-example 8
+                .o-col-xs-1
+                    .c-card-example 9
+                .o-col-xs-1
+                    .c-card-example 10
+                .o-col-xs-1
+                    .c-card-example 11
+                .o-col-xs-1
+                    .c-card-example 12
+            h4 no gutters
+            .o-row.o-row_no-gutters
+                .o-col-xs-1
+                    .c-card-example 1
+                .o-col-xs-1
+                    .c-card-example 2
+                .o-col-xs-1
+                    .c-card-example 3
+                .o-col-xs-1
+                    .c-card-example 4
+                .o-col-xs-1
+                    .c-card-example 5
+                .o-col-xs-1
+                    .c-card-example 6
+                .o-col-xs-1
+                    .c-card-example 7
+                .o-col-xs-1
+                    .c-card-example 8
+                .o-col-xs-1
+                    .c-card-example 9
+                .o-col-xs-1
+                    .c-card-example 10
+                .o-col-xs-1
+                    .c-card-example 11
+                .o-col-xs-1
+                    .c-card-example 12
+            h4 example sass function media-within (red if XS, blue if SM, green if MD, yellow if LG, grey if XL)
+                .o-row.c-cards-media-within
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 1
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 2
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 3
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 4
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 5
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 6
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 7
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 8
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 9
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 10
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 11
+                    .o-col-lg-1.o-col-md-2.o-col-sm-3.o-col-xs-6
+                        .c-card-example 12
+            h4 Example sass function media-big and media-min (if big SM background-color: antiquewhite;, if min SM background-color: blueviolet;)
+                .o-row.o-row_no-gutters.c-cards-media-bigmin
+                    .o-col-lg-3.o-col-md-6.o-col-xs-12.order-sm-4.order-md-0
+                        .c-card-example lg-3 md-6 xs-12 push-xs-2
+                    .o-col-lg-3.o-col-md-6.o-col-xs-12
+                        .c-card-example lg-3 md-6 xs-12
+                    .o-col-lg-3.o-col-md-6.o-col-xs-12
+                        .c-card-example lg-3 md-6 xs-12
+                    .o-col-lg-3.o-col-md-6.o-col-xs-12
+                        .c-card-example lg-3 md-6 xs-12
+            h4 space between *(work only uncompressed HTML)
+            .o-row.o-row_align-items.o-row_align-items-between
+                .o-col-xs-1
+                    .c-card-example Text
+                .o-col-xs-1
+                    .c-card-example Tex
+                .o-col-xs-1
+                    .c-card-example Text
+                .o-col-xs-1
+                    .c-card-example Text
+            h4 col offset
+                .o-row
+                    .o-col-xs-1
+                        .c-card-example Left
+                    .o-col-xs-1.o-col-xs-offset-10
+                        .c-card-example Right
+                    .o-col-xs-1
+                        .c-card-example Text
+                    .o-col-xs-1
+                        .c-card-example Text
+            h4 Offsetting columns
+                .o-row
+                    .o-col-xs-4
+                        .c-card-example text
+                    .o-col-xs-4.o-col-xs-offset-4
+                        .c-card-example text
+                .o-row
+                    .o-col-xs-3.o-col-xs-offset-3
+                        .c-card-example text
+                    .o-col-xs-3.o-col-xs-offset-3
+                        .c-card-example text
+                .o-row
+                    .o-col-xs-6.o-col-xs-offset-3
+                        .c-card-example text
+            h4 Column ordering
+                .o-row
+                    .o-col-md-9.o-col-md-push-3.o-col-xs-12
+                        .c-card-example Left
+                    .o-col-md-3.o-col-md-pull-9.o-col-xs-12
+                        .c-card-example Right
+            h4 align-items
+                h5 Start
+                .o-row.o-row_align-items-start
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                h5 End
+                .o-row.o-row_align-items-end
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                h5 Center
+                .o-row.o-row_align-items-center
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                    .o-col-xs-3
+                        .c-card-example
+                h5 Stretch
+                .o-row.o-row_align-items-stretch
+                    .o-col-md-3
+                        .c-card-example text
+                    .o-col-md-3
+                        .c-card-example Whole every miles as tiled at seven or. Wished he entire esteem mr oh by. Possible bed you pleasure civility boy elegance ham. He prevent request
+                            | by if in pleased. Picture too and concern has was comfort. Ten difficult resembled eagerness nor
+                    .o-col-md-3
+                        .c-card-example text
+                    .o-col-md-3
+                        .c-card-example text
+                h5 Baseline
+                .o-row.o-row_align-items-baseline
+                    .o-col-xs-3
+                        .c-card-example(style='height: 100px; padding-top: 20px') text
+                    .o-col-xs-3
+                        .c-card-example(style='height: 200px;') Text text
+                    .o-col-xs-3
+                        .c-card-example(style='height: 250px; padding-top: 40px') text
+                    .o-col-xs-3
+                        .c-card-example(style='height: 150px;') Text
+            h4 width evenly
+            .o-row.o-row_align-items-evenly
+                .o-col
+                    .c-card-example text
+                .o-col
+                    .c-card-example Whole every miles as tiled at seven or. Wished he entire esteem mr oh by. Possible bed you pleasure civility boy elegance ham. He prevent request
+                        | by if in pleased. Picture too and concern has was comfort. Ten difficult resembled eagerness nor
+                .o-col
+                    .c-card-example text
+                .o-col
+                    .c-card-example text
+            h4 width evenly no gutters
+            .o-row.o-row_align-items-evenly.o-row_no-gutters
+                .o-col
+                    .c-card-example text
+                .o-col
+                    .c-card-example Whole every miles as tiled at seven or. Wished he entire esteem mr oh by
+                .o-col
+                    .c-card-example text
+                .o-col
+                    .c-card-example Whole every miles as tiled at seven or. Wished he entire esteem mr oh by.
+                .o-col
+                    .c-card-example text
+                .o-col
+                    .c-card-example text

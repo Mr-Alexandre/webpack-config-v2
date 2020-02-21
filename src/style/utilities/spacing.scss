@@ -1,0 +1,30 @@
+@each $breakpoint in map-keys($gridBreakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $gridBreakpoints);
+
+    @each $prop, $abbrev in (margin: m, padding: p) {
+      @each $size in $spacings {
+
+        .#{$spacingPrefix}#{$abbrev}#{$infix}-#{$size} {
+          #{$prop}: #{$size}px !important;
+        }
+        .#{$spacingPrefix}#{$abbrev}t#{$infix}-#{$size},
+        .#{$spacingPrefix}#{$abbrev}y#{$infix}-#{$size} {
+          #{$prop}-top: #{$size}px !important;
+        }
+        .#{$spacingPrefix}#{$abbrev}r#{$infix}-#{$size},
+        .#{$spacingPrefix}#{$abbrev}x#{$infix}-#{$size} {
+          #{$prop}-right: #{$size}px !important;
+        }
+        .#{$spacingPrefix}#{$abbrev}b#{$infix}-#{$size},
+        .#{$spacingPrefix}#{$abbrev}y#{$infix}-#{$size} {
+          #{$prop}-bottom: #{$size}px !important;
+        }
+        .#{$spacingPrefix}#{$abbrev}l#{$infix}-#{$size},
+        .#{$spacingPrefix}#{$abbrev}x#{$infix}-#{$size} {
+          #{$prop}-left: #{$size}px !important;
+        }
+      }
+    }
+  }
+}

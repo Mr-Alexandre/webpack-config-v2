@@ -1,0 +1,21 @@
+//@import "../../fonts/CustomIcon/style.scss";
+
+.#{generatePrefix($prefixObject)}icon_xs {
+  font-size: 10px;
+}
+
+.#{generatePrefix($prefixObject)}icon_sm {
+  font-size: 12px;
+}
+
+.#{generatePrefix($prefixObject)}icon_md {
+  font-size: 20px;
+}
+
+.#{generatePrefix($prefixObject)}icon_lg {
+  font-size: 24px;
+}
+
+.#{generatePrefix($prefixObject)}icon_xl {
+  font-size: 28px;
+}

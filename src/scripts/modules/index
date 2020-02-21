@@ -1,0 +1,4 @@
+import './mask/index';
+import SmoothScroll from './scroll/SmoothScroll';
+
+new SmoothScroll().init();
