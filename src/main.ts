@@ -22,4 +22,6 @@ import './components/exanple';
 
 
 // Pages
-// import './pages/main';
+import './pages/animation';
+import './pages/modal';
+import './pages/tabs';

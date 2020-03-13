@@ -1,4 +1,4 @@
-export interface HttpClientOptions {
+export type THttpClientOptions = {
     headers?: HeadersInit;
     mode?: RequestMode,
     cache?: RequestCache,
@@ -13,8 +13,7 @@ export interface HttpClientOptions {
 }
 
 export default class HttpClient {
-
-    constructor(private readonly defaultOption?: HttpClientOptions) {
+    constructor(private readonly defaultOption?: THttpClientOptions) {
         this.defaultOption = {
             ...{
                 mode: "cors",
@@ -33,45 +32,42 @@ export default class HttpClient {
         };
     }
 
-    public request<R>(method: string, url: string, options?: RequestInit): Promise<Response> {
-        return fetch(url, {
-            ...this.defaultOption,
-            ...options
-        })
+    public request<R>(method: string, url: string, body: BodyInit | null, options?: THttpClientOptions): Promise<Response> {
+        return this.send(url, body, method, options);
     };
 
-    public delete(url: string, options?: HttpClientOptions): Promise<Response> {
+    public delete(url: string, options?: THttpClientOptions): Promise<Response> {
         return this.send(url, null, 'DELETE', options);
     };
 
-    public get(url: string, options?: HttpClientOptions): Promise<Response> {
+    public get(url: string, options?: THttpClientOptions): Promise<Response> {
         return this.send(url, null, 'GET', options);
     };
 
-    public head(url: string, options?: HttpClientOptions): Promise<Response> {
+    public head(url: string, options?: THttpClientOptions): Promise<Response> {
         return this.send(url, null, 'HEAD', options);
     };
 
-    public options(url: string, options?: HttpClientOptions): Promise<Response> {
+    public options(url: string, options?: THttpClientOptions): Promise<Response> {
         return this.send(url, null, 'OPTIONS', options);
     };
 
-    public patch(url: string, body: BodyInit | null, options?: HttpClientOptions): Promise<Response> {
+    public patch(url: string, body: BodyInit | null, options?: THttpClientOptions): Promise<Response> {
         return this.send(url, body, 'PATCH', options);
     };
 
-    public post(url: string, body: BodyInit | null, options?: HttpClientOptions): Promise<Response> {
+    public post(url: string, body: BodyInit | null, options?: THttpClientOptions): Promise<Response> {
         return this.send(url, body, 'POST', options);
     };
 
-    public put(url: string, body: BodyInit | null, options?: HttpClientOptions): Promise<Response> {
+    public put(url: string, body: BodyInit | null, options?: THttpClientOptions): Promise<Response> {
         return this.send(url, body, 'PUT', options);
     };
 
-    private send(url: string, body: BodyInit | null, method: string, options?: HttpClientOptions): Promise<Response> {
+    private send(url: string, body: BodyInit | null, method: string, options?: THttpClientOptions): Promise<Response> {
         return fetch(url, {
             body: body,
-            method: 'POST',
+            method: method,
             headers: options.headers || this.defaultOption.headers,
             mode: options.mode || this.defaultOption.mode,
             cache: options.cache || this.defaultOption.cache,

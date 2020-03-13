@@ -1,5 +1,5 @@
-import {Observer} from "./observer";
-import {SubjectSelect} from "../subject/subject";
+import {Observer} from "./Observer";
+import {SubjectSelect} from "../subject/Subject";
 
 export default class ExampleObserver implements Observer {
 

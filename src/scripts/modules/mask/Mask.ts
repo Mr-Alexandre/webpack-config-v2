@@ -4,13 +4,14 @@ import IMask from 'imask';
 interface MaskFormats {
     [format: string]: MaskFormat;
 }
+
 interface MaskFormat {
     placeholder: string;
     class: string;
     option: IMask.AnyMaskedOptions;
 }
 
-const maskFormats: MaskFormats = {
+export const maskFormats: MaskFormats = {
     phone: {
         placeholder: '+7 (xxx) xxx-xx-xx',
         class: 'js-maskPhone',
@@ -96,17 +97,35 @@ const maskFormats: MaskFormats = {
 };
 
 export default class Mask {
-    private formats: MaskFormats = maskFormats;
+    private mutationObserver: MutationObserver;
+
+    private mutationObserverListener: MutationCallback = (events: MutationRecord[]) => {
+        events.forEach(event => {
+            this.activate(event.target as HTMLElement);
+        })
+    };
+
+    constructor(private formats: MaskFormats) {
+    }
 
     public init(): void {
         this.activate();
+        this.autoActivate()
     }
 
-    private activate(): void {
+    private autoActivate(): void {
+        if (!this.mutationObserver) {
+            this.mutationObserver = new MutationObserver(this.mutationObserverListener);
+            this.mutationObserver.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
+        }
+    }
+
+    private activate(scope: HTMLElement = document.body): void {
         for (let key in this.formats) {
-            const fields: HTMLCollectionOf<
-                Element
-            > = document.getElementsByClassName(this.formats[key].class);
+            const fields: HTMLCollectionOf<Element> = scope.getElementsByClassName(this.formats[key].class);
             for (let i = 0, len = fields.length; i < len; i++) {
                 IMask(
                     fields.item(i) as HTMLInputElement,

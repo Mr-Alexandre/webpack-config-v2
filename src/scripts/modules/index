@@ -1,4 +1,5 @@
-import './mask/index';
+import Mask, {maskFormats} from "./mask/Mask";
 import SmoothScroll from './scroll/SmoothScroll';
 
 new SmoothScroll().init();
+new Mask(maskFormats).init();

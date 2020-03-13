@@ -1,7 +1,7 @@
-export interface FormValidationError {
-    errorFields: FormFieldMessage;
+export type TFormValidationError = {
+    errorFields: TFormFieldMessage;
 }
 
-export interface FormFieldMessage {
+export type TFormFieldMessage = {
     [key: string]: Array<string>;
 }

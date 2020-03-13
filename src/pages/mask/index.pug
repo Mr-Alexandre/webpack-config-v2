@@ -1,0 +1,32 @@
+extends ../../base
+
+block title
+    title Example Mask
+
+block body
+    .o-container
+        .o-row
+            .o-col-6.o-col-md-4
+                h4 Phone mask
+                section.block
+                    input(type='tel').js-maskPhone
+
+            .o-col-6.o-col-md-4
+                h4 IIN mask
+                section.block
+                    input(type='number').js-maskIin
+
+            .o-col-6.o-col-md-4
+                h4 Card mask
+                section.block
+                    input(type='text').js-maskVisaCard
+
+            .o-col-6.o-col-md-4
+                h4 Number and Latin upper mask
+                section.block
+                    input(type='text').js-maskNumberLatinUpper
+
+            .o-col-6.o-col-md-4
+                h4 Latin upper mask
+                section.block
+                    input(type='text').js-maskLatinUpper

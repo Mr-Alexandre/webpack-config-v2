@@ -1,14 +1,13 @@
-import SubjectModel from '../../patterns/subject/subject';
+import SubjectModel from '../subject/Subject';
 
 export default class Singleton {
     private static instance: Singleton;
 
-    protected constructor() {
+    constructor() {
         if (Singleton.instance) {
             return Singleton.instance;
-        }else{
-            Singleton.instance = new Singleton();
         }
+        Singleton.instance = this;
     }
 
     public static getInstance(): Singleton {
@@ -22,7 +21,7 @@ export default class Singleton {
 }
 
 export class SingletonSubject extends SubjectModel {
-    protected constructor(){
+    constructor(){
         super();
     }
 }

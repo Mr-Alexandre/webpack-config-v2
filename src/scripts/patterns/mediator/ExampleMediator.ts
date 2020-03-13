@@ -1,4 +1,4 @@
-import {Mediator} from "./mediator";
+import {Mediator} from "./Mediator";
 
 export default class ExampleMediator implements Mediator{
 

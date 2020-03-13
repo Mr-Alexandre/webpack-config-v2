@@ -1,12 +1,12 @@
-import {FormValidationError} from "../../models/form";
+import {TFormValidationError} from "../../models/form";
 
-export default class FieldGroup {
+export default class Validator {
     private CLASS_FIELD_GROUP: string = 'js-fieldGroup';
     private CLASS_FIELD_GROUP_MESSAGE: string = 'js-fieldGroupMessage';
     private CLASS_FIELD_GROUP_ERROR: string = 'is-invalid';
     private CLASS_FIELD_GROUP_SUCCESS: string = 'is-valid';
 
-    public validate(scope: HTMLElement, error: FormValidationError): FieldGroup {
+    public validate(scope: HTMLElement, error: TFormValidationError): Validator {
         const allErrorsField: HTMLCollectionOf<Element> = scope.getElementsByClassName(this.CLASS_FIELD_GROUP_ERROR);
         Array.from(allErrorsField).forEach((element: HTMLElement) => {
             element.classList.remove(this.CLASS_FIELD_GROUP_ERROR);
@@ -28,7 +28,7 @@ export default class FieldGroup {
         return this;
     }
 
-    public clear(scope: HTMLElement): FieldGroup {
+    public clear(scope: HTMLElement): Validator {
         const allFields: HTMLCollectionOf<Element> = scope.getElementsByClassName(this.CLASS_FIELD_GROUP);
         Array.from(allFields).forEach((element: HTMLElement) => {
             const inputs: Array<HTMLInputElement> = Array.from(

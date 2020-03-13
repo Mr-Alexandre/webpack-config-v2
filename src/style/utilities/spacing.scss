@@ -26,5 +26,24 @@
         }
       }
     }
+
+    // Some special margin utils
+    .#{$spacingPrefix}m#{$infix}-auto { margin: auto !important; }
+    .#{$spacingPrefix}mt#{$infix}-auto,
+    .#{$spacingPrefix}my#{$infix}-auto {
+      margin-top: auto !important;
+    }
+    .#{$spacingPrefix}mr#{$infix}-auto,
+    .#{$spacingPrefix}mx#{$infix}-auto {
+      margin-right: auto !important;
+    }
+    .#{$spacingPrefix}mb#{$infix}-auto,
+    .#{$spacingPrefix}my#{$infix}-auto {
+      margin-bottom: auto !important;
+    }
+    .#{$spacingPrefix}ml#{$infix}-auto,
+    .#{$spacingPrefix}mx#{$infix}-auto {
+      margin-left: auto !important;
+    }
   }
 }

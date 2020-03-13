@@ -1,182 +1,110 @@
-import Animation, {AnimationType, preparingForAnimation} from '../animation/Animation';
-import {freezeScroll} from '../../tools';
-import {ClassScroll} from '../../variables';
-import CreateEvent from '../event/Event';
+import Animation, {EAnimationType, preparingForAnimation} from '../animation/Animation';
+import CreateEvent from '../event/CreateEvent';
+import FreezingScroll from "../scroll/FreezingScroll";
 
-export interface ModalHooks {
+export type TModalHooks = {
     beforeOpen?: () => void;
     open?: () => void;
     beforeClose?: () => void;
     close?: () => void;
 }
 
-export enum ModalType {
-    custom,
-    confirm,
-    prompt,
-}
-
-export interface ModalOptions {
+export type TModalOptions = {
     animationClassPrefix?: string;
-    dynamical?: boolean;
-    hooks?: ModalHooks;
-    type?: ModalType;
+    animationMutableProperties?: Array<string>;
+    backdropClass?: string;
+    hooks?: TModalHooks;
     hasBackdrop?: boolean;
-    confirmCallback?: (result?: boolean, btn?: HTMLButtonElement) => boolean;
-    promptCallback?<T>(data: T): T;
-}
-
-export interface ModalEventOptions {
-    isCustom: boolean;
-    isConfirm: boolean;
-    confirmResult: boolean;
-    isPrompt: boolean;
+    closable?: boolean;
+    backdropClosable?: boolean;
+    freezeScroll?: boolean;
 }
 
 export default class Modal {
     private readonly CLASS_MODAL: string = 'js-modal';
     private readonly CLASS_CONTAINER: string = 'js-modalContainer';
     private readonly CLASS_CONTENT: string = 'js-modalContent';
-    private readonly CLASS_MESSAGE: string = 'js-ModalMessage';
-    private readonly CLASS_HEADER: string = 'js-modalHeader';
-    private readonly CLASS_BODY: string = 'js-modalBody';
-    private readonly CLASS_FOOTER: string = 'js-modalFooter';
-    private readonly CLASS_MODAL_CLOSE: string = 'js-modalClose';
-    private readonly CLASS_LOADER_ACTIVE: string = 'is-loading';
-    private readonly CLASS_BTN_CONFIRM: string = 'js-modalBtnConfirm';
+    private readonly CLASS_CLOSE: string = 'js-modalClose';
 
     private modalContainer: HTMLElement;
-    private modalHeader: HTMLElement;
-    private modalBody: HTMLElement;
-    private modalFooter: HTMLElement;
-    private modalMessage: HTMLElement;
     private modalContent: HTMLElement;
-    private btnConfirm: HTMLButtonElement;
-
-    private hasProcessOpening: boolean = false;
-
-    private eventOptions: ModalEventOptions;
-
-    private listener: EventListener;
-
     private animation: Animation;
+    private isProcessOpening: boolean = false;
+    private isVisible: boolean = false;
 
-    constructor(private modal: HTMLElement, private options?: ModalOptions) {
-        if (this.options.dynamical) {
-            return;
-        }
+    private freezingScroll: FreezingScroll;
+
+    constructor(protected modal: HTMLElement, protected options?: TModalOptions) {
         if (!modal) {
             throw new Error('Modal is not defined !');
         }
-    }
-
-    public init(): void {
-        const defaultOptions: ModalOptions = {
-            type: ModalType.custom,
-            dynamical: false,
-            animationClassPrefix: 'c-modal_animate',
-            hasBackdrop: true,
-        };
-        this.options = {...defaultOptions, ...this.options};
-        this.eventOptions = {
-            isCustom: this.options.type === ModalType.custom,
-            isConfirm: this.options.type === ModalType.confirm,
-            confirmResult: undefined,
-            isPrompt: this.options.type === ModalType.prompt,
-        };
-        this.searchAndSetModalElements();
-        this.animation = this.createAnimation();
-
-        this.attachEvent();
-    }
-
-    public dynamicalInit(modal: HTMLElement): void {
-        if (!modal) {
-            throw new Error('Modal is not defined !');
-        }
-        if (this.modal) {
-            this.remove();
-        }
-        this.modal = modal;
         this.init();
     }
 
     public open(): void {
-        this.hasProcessOpening = true;
         const event: boolean = this.createEvent(true);
-        if (!event) {
+        if (!event || this.isVisible) {
             // is preventDefault
             return;
         }
-
+        this.isProcessOpening = true;
         this.animation.toggleVisibility(true);
+        this.isVisible = true;
+        this.freezingScroll.freeze();
     }
 
     public close(): void {
-        if (this.hasProcessOpening) {
+        if (this.isProcessOpening) {
             return;
         }
-
-        let res: boolean = true;
-        if (this.eventOptions.isConfirm) {
-            res = this.options.confirmCallback(this.eventOptions.confirmResult, this.btnConfirm);
+        const event: boolean = this.createEvent(false);
+        if (!event || !this.isVisible) {
+            // is preventDefault
+            return;
         }
-
-        if (res) {
-            this.animation.toggleVisibility(false);
-            const event: boolean = this.createEvent(false);
-            if (!event) {
-                // is preventDefault
-                return;
-            }
-        }
-    }
-
-    public getModalContainer(): HTMLElement {
-        return this.modalContainer;
+        this.animation.toggleVisibility(false);
+        this.isVisible = false;
+        this.freezingScroll.unfreeze();
     }
 
     public getContent(): HTMLElement {
         return this.modalContent;
     }
 
-    public getHeader(): HTMLElement {
-        return this.modalHeader;
+    public destroy(): void {
+        this.removeEventOnClose();
+        this.modal.remove();
     }
 
-    public getBody(): HTMLElement {
-        return this.modalBody;
-    }
-
-    public getFooter(): HTMLElement {
-        return this.modalFooter;
-    }
-
-    public getMessage(): HTMLElement {
-        return this.modalMessage;
-    }
-
-    public setLoader(status: boolean): void {
-        if (status) {
-            this.modal.classList.add(this.CLASS_LOADER_ACTIVE);
-        } else {
-            this.modal.classList.remove(this.CLASS_LOADER_ACTIVE);
-        }
-    }
-
-    public updateVar(): Modal {
+    protected init(): void {
+        this.freezingScroll = new FreezingScroll();
+        const defaultOptions: TModalOptions = this.getDefaultOptions();
+        this.options = {...defaultOptions, ...this.options};
         this.searchAndSetModalElements();
-        return this;
+        this.animation = this.createAnimation();
+        this.attachEventOnClose();
+    }
+
+    private getDefaultOptions(): TModalOptions {
+        return {
+            animationClassPrefix: 'c-modal-animate',
+            animationMutableProperties: ['transform', 'opacity'],
+            backdropClass: 'c-modal_backdrop',
+            hasBackdrop: true,
+            closable: true,
+            backdropClosable: true,
+            freezeScroll: true,
+        };
     }
 
     private createAnimation(): Animation {
         return new Animation(this.modalContainer, {
-            animationType: AnimationType.animation,
+            animationType: EAnimationType.animation,
             classPrefix: this.options.animationClassPrefix,
-            mutableProperties: ['transform', 'opacity'],
+            mutableProperties: this.options.animationMutableProperties,
             hooks: {
                 beforeEnter: () => {
-                    if (this.options && this.options.hooks && this.options.hooks.beforeOpen) {
+                    if (this.options?.hooks?.beforeOpen) {
                         this.options.hooks.beforeOpen();
                     }
                     if (this.options.hasBackdrop) {
@@ -185,12 +113,10 @@ export default class Modal {
                         ]);
                     }
                     this.modal.style.display = 'block';
-                    freezeScroll(true, ClassScroll.yNone);
-
                 },
                 enter: () => {
                     if (this.options.hasBackdrop) {
-                        this.modal.classList.add('c-modal_backdrop');
+                        this.modal.classList.add(this.options.backdropClass);
                     }
                 },
                 enterCancelled: () => {
@@ -199,13 +125,13 @@ export default class Modal {
                             'background-color',
                         ]);
                     }
-                    if (this.options && this.options.hooks && this.options.hooks.open) {
+                    if (this.options?.hooks?.open) {
                         this.options.hooks.open();
                     }
-                    this.hasProcessOpening = false;
+                    this.isProcessOpening = false;
                 },
                 beforeLeave: () => {
-                    if (this.options && this.options.hooks && this.options.hooks.beforeClose) {
+                    if (this.options?.hooks?.beforeClose) {
                         this.options.hooks.beforeClose();
                     }
                     if (this.options.hasBackdrop) {
@@ -216,18 +142,17 @@ export default class Modal {
                 },
                 leave: () => {
                     if (this.options.hasBackdrop) {
-                        this.modal.classList.remove('c-modal_backdrop');
+                        this.modal.classList.remove(this.options.backdropClass);
                     }
                 },
                 leaveCancelled: () => {
-                    freezeScroll(false, ClassScroll.yNone);
                     if (this.options.hasBackdrop) {
                         preparingForAnimation(this.modal, false, [
                             'background-color',
                         ]);
                     }
                     this.modal.style.display = 'none';
-                    if (this.options && this.options.hooks && this.options.hooks.close) {
+                    if (this.options?.hooks?.close) {
                         this.options.hooks.close();
                     }
                 },
@@ -235,41 +160,35 @@ export default class Modal {
         });
     }
 
-    private attachEvent(): void {
-        this.listener = (event: Event) => {
-            const element: HTMLElement = event.target as HTMLElement;
-            if (element.closest(`.${this.CLASS_BTN_CONFIRM}`)) {
-                event.preventDefault();
-                if (this.options && this.options.type && this.options.type === ModalType.confirm) {
-                    this.eventOptions.isConfirm = true;
-                    this.eventOptions.confirmResult = true;
-                }
-                this.close();
-            } else if (element.closest(`.${this.CLASS_MODAL_CLOSE}`) || element.classList.contains(this.CLASS_MODAL)) {
-                if (this.options && this.options.type && this.options.type === ModalType.confirm) {
-                    this.eventOptions.isConfirm = true;
-                    this.eventOptions.confirmResult = false;
-                }
-
-                this.close();
+    private listenerClose: EventListener = (event: Event) => {
+        const element: HTMLElement = event.target as HTMLElement;
+        if (element.closest(`.${this.CLASS_CLOSE}`)) {
+            if (!this.options.closable) {
+                return;
             }
-        };
-        this.modal.addEventListener('click', this.listener);
+            this.close();
+        } else if (element.classList.contains(this.CLASS_MODAL)) {
+            if (!this.options.backdropClosable) {
+                return;
+            }
+            this.close();
+        }
+    };
+
+    private attachEventOnClose(): void {
+        this.modal.addEventListener('click', this.listenerClose);
+    }
+
+    private removeEventOnClose(): void {
+        this.modal.removeEventListener('click', this.listenerClose);
     }
 
     private searchAndSetModalElements(): void {
-        this.modalContainer = this.modal.querySelector(
-            `.${this.CLASS_CONTAINER}`
-        );
+        this.modalContainer = this.modal.querySelector(`.${this.CLASS_CONTAINER}`);
         if (!this.modalContainer) {
             throw new Error('Modal container is not defined !');
         }
-        this.modalHeader = this.modal.querySelector(`.${this.CLASS_HEADER}`);
-        this.modalBody = this.modal.querySelector(`.${this.CLASS_BODY}`);
-        this.modalFooter = this.modal.querySelector(`.${this.CLASS_FOOTER}`);
-        this.modalMessage = this.modal.querySelector(`.${this.CLASS_MESSAGE}`);
         this.modalContent = this.modal.querySelector(`.${this.CLASS_CONTENT}`);
-        this.btnConfirm = this.modal.querySelector(`.${this.CLASS_BTN_CONFIRM}`);
     }
 
     private createEvent(state: boolean): boolean {
@@ -279,13 +198,7 @@ export default class Modal {
         } else {
             event = new CreateEvent('close').createCustom();
         }
-
-        const canceled: boolean = !this.modal.dispatchEvent(event);
-        return !canceled;
-    }
-
-    private remove(): void {
-        this.modal.removeEventListener('click', this.listener);
+        return this.modal.dispatchEvent(event);
     }
 
 }

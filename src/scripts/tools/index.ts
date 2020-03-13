@@ -179,3 +179,27 @@ export function deleteCookie(name: string) {
         'max-age': -1
     })
 }
+
+export function convertStringToHTMML(pseudoHTML: string): HTMLElement {
+    const ghostDiv: HTMLElement = document.createElement('div');
+    ghostDiv.innerHTML = pseudoHTML;
+    return ghostDiv.firstElementChild as HTMLElement;
+}
+
+export function strToBoolean(val: string) {
+    return !!JSON.parse(String(val).toLowerCase());
+}
+
+export function isHTMLElement(element: any) {
+    try {
+        //Using W3 DOM2 (works for FF, Opera and Chrome)
+        return element instanceof HTMLElement;
+    } catch (e) {
+        //Browsers not supporting W3 DOM2 don't have HTMLElement and
+        //an exception is thrown and we end up here. Testing some
+        //properties that all elements have (works on IE7)
+        return (typeof element === "object") &&
+            (element.nodeType === 1) && (typeof element.style === "object") &&
+            (typeof element.ownerDocument === "object");
+    }
+}

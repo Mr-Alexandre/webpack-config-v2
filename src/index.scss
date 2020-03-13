@@ -14,12 +14,15 @@
 @import "style/objects/_all__";
 
 //06.Components
+@import './components/modal/index';
 @import './components/exanple/example';
 
 
 
 //07.Pages
-//@import "./pages/main/index";
+@import "./pages/animation/index";
+@import "./pages/modal/index";
+@import "./pages/tabs/index";
 
 
 

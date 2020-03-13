@@ -1,0 +1,47 @@
+extends ../../base
+
+block title
+    title Example Modal
+
+block body
+    .o-container
+        .o-row
+            .o-col-12.o-col-md-6
+                section.block
+                    h3 Default
+                    button#js-btnShow Show
+
+                    div
+                        h4 Structure
+                        code
+                            pre
+                                | dialog.js-modal
+                                |   .js-modalContainer
+                                |        .js-modalClose
+                                |        .js-modalContent
+                                |           button.js-modalClose Закрыть
+
+                    +modal()#js-modalDefault
+
+            .o-col-12.o-col-md-6
+                section.block
+                    h3 Confirm
+                    button#js-btnShowConfirm Show
+
+                    div
+                        h4 Structure
+                        code
+                            pre
+                                | dialog.js-modal
+                                |   .js-modalContainer
+                                |        .js-modalContent
+                                |           button.js-modalBtnAccept Ок
+                                |           button.js-modalBtnReject Отчема
+
+                    +modalConfirm()#js-modalConfirm
+
+            .o-col-12.o-col-md-6
+                section.block
+                    h3 Create and open
+                    button#js-btnCreateModalDefault Create default
+                    button#js-btnCreateModalConfirm Create confirm
