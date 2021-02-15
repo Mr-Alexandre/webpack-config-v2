@@ -1,0 +1,52 @@
+extends ../../base
+
+block title
+    title Example Tabs
+
+block body
+    .o-container
+        .o-row
+            .o-col-12.o-col-md-6
+                section.block
+                    .js-tabs.c-tabs.js-tabsElement
+                        header.js-tabsHeader.c-tabs__header
+                            nav.js-tabsNav.is-active.c-tabs__nav
+                                button.js-tabsTab.c-tabs__tab.is-active Tab 1
+                                button.js-tabsTab.c-tabs__tab Tab 2
+                        .js-tabsContent.c-tabs__content
+                            .js-tabsItem.c-tabs__item.is-active
+                                p Content 1
+                            .js-tabsItem.c-tabs__item
+                                p Content Tab 2
+
+            .o-col-12.o-col-md-6
+                section.block
+                    .js-tabs.c-tabs
+                        header.js-tabsHeader.c-tabs__header
+                            nav.js-tabsNav.is-active.c-tabs__nav
+                                button.js-tabsTab.c-tabs__tab.is-active Tab 1
+                                button.js-tabsTab.c-tabs__tab Tab 2
+                        .js-tabsContent.c-tabs__content
+                            .js-tabsItem.c-tabs__item.is-active
+                                p Content 1
+                            .js-tabsItem.c-tabs__item
+                                p Content Tab 2
+
+            .o-col-12.o-col-md-6
+                section.block
+                    h4 Dynamical Tabs
+                    .js-dynamicalTabs
+
+            .o-col-12.o-col-md-6
+                section.block
+                    h4 Tabs with extensions
+                    .js-tabs.c-tabs.js-tabsWithExtensions
+                        header.js-tabsHeader.c-tabs__header
+                            nav.js-tabsNav.is-active.c-tabs__nav
+                                button.js-tabsTab.c-tabs__tab.is-active Tab 1
+                                button.js-tabsTab.c-tabs__tab Tab 2
+                        .js-tabsContent.c-tabs__content
+                            .js-tabsItem.c-tabs__item.is-active
+                                p Content 1
+                            .js-tabsItem.c-tabs__item
+                                p Content Tab 2

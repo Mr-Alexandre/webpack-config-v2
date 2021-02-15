@@ -1,0 +1,12 @@
+@function generatePrefix($value) {
+  @if ($value != '' or $value != ' ') {
+    @return $value + '-';
+  }
+  @return '';
+}
+@function generatePostfix($value) {
+  @if ($value != '' or $value != ' ') {
+    @return '-' + $value;
+  }
+  @return '';
+}

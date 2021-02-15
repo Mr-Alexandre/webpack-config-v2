@@ -1,0 +1,122 @@
+/*
+h1 = 80
+h2 = 60
+h3 = 40
+h4 = 24
+h5 = 20
+h6 = 18
+*/
+body, html {
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+/*h1*/
+h1{
+  //font-size: 80px;
+}
+/*h1 end*/
+
+/*h2*/
+h2{
+  //font-size: 60px;
+}
+/*h2 end*/
+
+/*h3*/
+h3 {
+  //font-size: 40px;
+  @include font-bold();
+}
+/*h3 end*/
+
+/*h4*/
+h4{
+  font-size: 24px;
+}
+/*h4 end*/
+
+/*h5*/
+h5{
+  font-size: 18px;
+}
+/*h5 end*/
+
+/*h6*/
+h6{
+  font-size: 14px;
+}
+/*h6 end*/
+
+p {
+  font-size: 18px;
+  margin: 0;
+}
+
+a {
+  font-size: 18px;
+}
+
+abbr {
+  font-size: 18px;
+}
+
+acronym {
+  font-size: 18px;
+}
+
+address {
+  font-size: 18px;
+}
+
+bdo {
+  font-size: 18px;
+}
+
+blockquote {
+  font-size: 18px;
+}
+
+cite {
+  font-size: 18px;
+}
+
+q {
+  font-size: 18px;
+}
+
+code {
+  font-size: 18px;
+}
+
+kbd {
+  font-size: 18px;
+}
+
+samp {
+  font-size: 18px;
+}
+
+var {
+  font-size: 18px;
+}
+
+pre {
+  font-size: 18px;
+}
+
+time {
+  font-size: 18px;
+}
+
+output {
+  font-size: 18px;
+}

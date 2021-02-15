@@ -1,0 +1,3 @@
+import SendRequest from './SendRequest';
+
+new SendRequest().init();

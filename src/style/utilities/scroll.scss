@@ -1,0 +1,11 @@
+.#{generatePrefix($prefixUtilities)}scroll-y-none {
+  overflow-y: hidden;
+}
+
+.#{generatePrefix($prefixUtilities)}scroll-x-none {
+  overflow-x: hidden;
+}
+
+.#{generatePrefix($prefixUtilities)}scroll-none {
+  overflow: hidden;
+}
