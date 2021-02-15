@@ -1,0 +1,36 @@
+.c-tabs {
+  &__header {
+    position: relative;
+  }
+
+  &__nav {
+  }
+
+  &__tab {
+    border: 1px solid rgba(128, 128, 128, 0.24);
+    padding: 10px 20px;
+
+    &.is-active {
+      background-color: white;
+    }
+  }
+
+  &__content {
+  }
+
+  &__item {
+    &:not(.is-active) {
+      display: none;
+    }
+  }
+
+}
+
+.c-tabs__header-underline {
+  position: absolute;
+  bottom: 0;
+  transition: width 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),
+  transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  background-color: $color-red;
+  height: 2px;
+}

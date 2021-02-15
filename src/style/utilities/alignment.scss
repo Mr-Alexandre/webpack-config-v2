@@ -1,0 +1,50 @@
+.#{$alignmentPrefix}align-baseline { vertical-align: baseline !important; } // Browser default
+.#{$alignmentPrefix}align-top { vertical-align: top !important; }
+.#{$alignmentPrefix}align-middle { vertical-align: middle !important; }
+.#{$alignmentPrefix}align-bottom { vertical-align: bottom !important; }
+.#{$alignmentPrefix}align-text-bottom { vertical-align: text-bottom !important; }
+.#{$alignmentPrefix}align-text-top { vertical-align: text-top !important; }
+
+
+.#{$alignmentPrefix}align-items-center {
+  & > :nth-child(1n + 1) {
+    display: inline-block;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+}
+
+.#{$alignmentPrefix}align-items-space-between {
+  /*WARNING: This method only works with uncompressed HTML and requires a fixed height on the container and not work with tag ('a', 'span') */
+  text-align: justify;
+  font-size: 0.04px;
+
+  line-height: 0;
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+  }
+  & > :nth-child(n + 1) {
+    display: inline-block;
+    line-height: normal;
+  }
+}
+
+.#{$alignmentPrefix}align-items-evenly {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+
+  & > :nth-child(1n + 1) {
+    display: table-cell;
+    width: 100%;
+  }
+}
+
+.#{$alignmentPrefix}block-horizontal-center {
+  margin: 0 auto;
+}

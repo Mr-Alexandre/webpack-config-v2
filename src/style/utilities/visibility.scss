@@ -1,0 +1,11 @@
+.#{$visibilityPrefix}visible {
+  visibility: visible;
+}
+
+.#{$visibilityPrefix}invisible {
+  visibility: hidden;
+}
+
+.#{$visibilityPrefix}invisible-field {
+  @include hidden-visually();
+}

@@ -1,0 +1,56 @@
+@function breakpoint-min($name, $breakpoints: $gridBreakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function breakpoint-infix($name, $breakpoints: $gridBreakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+
+@mixin media-breakpoint-up($name, $breakpoints: $gridBreakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: #{$min}px) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-min($point) {
+  @media screen and (max-width: map_get($gridBreakpoints, $point) - 1 + "px") {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-big($point) {
+  @media screen and (min-width: map_get($gridBreakpointsMax, $point) + 1 + "px") {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-between($from, $to) {
+  @if (map_get($gridBreakpointsMax, $to) == infinity) {
+    @media screen and (min-width: map_get($gridBreakpoints, $from) + "px") {
+      @content;
+    }
+  } @else {
+    @media (min-width: map_get($gridBreakpoints, $from) + "px") and (max-width: map_get($gridBreakpointsMax, $to) + "px") {
+      @content;
+    }
+  }
+}
+
+@mixin media-breakpoint-within($point) {
+  @if (map_get($gridBreakpointsMax, $point) == infinity) {
+    @media screen and (min-width: map_get($gridBreakpoints, $point) + "px") {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: map_get($gridBreakpoints, $point) + "px") and (max-width: map_get($gridBreakpointsMax, $point) + "px") {
+      @content;
+    }
+  }
+}

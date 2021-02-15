@@ -1,0 +1,24 @@
+@import "../tools/functions";
+
+$prefixPersonalize: 'name' !default;
+
+$prefixObject: 'o' !default;
+$prefixUtilities: 'u' !default;
+$prefixComponents: 'c' !default;
+$prefixContext: 's' !default;
+
+$gridContainerName: 'container' !default;
+$gridColumnName: 'col' !default;
+$gridRowName: 'row' !default;
+
+// objects
+$gridPrefix: generatePrefix($prefixObject);
+
+// utilities
+$alignmentPrefix: generatePrefix($prefixUtilities);
+$displayPrefix: generatePrefix($prefixUtilities);
+$flexboxPrefix: generatePrefix($prefixUtilities);
+$floatPrefix: generatePrefix($prefixUtilities);
+$spacingPrefix: generatePrefix($prefixUtilities);
+$textPrefix: generatePrefix($prefixUtilities);
+$visibilityPrefix: generatePrefix($prefixUtilities);

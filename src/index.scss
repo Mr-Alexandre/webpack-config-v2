@@ -1,13 +1,30 @@
-@import 'default/variables';
-@import 'default/mixin';
-@import 'default/fonts';
-@import 'default/default';
-@import 'default/spacing';
-@import 'default/normalize';
-@import 'default/util';
-@import 'default/animation';
-/*Grid*/
-@import 'default/inline-grid';
-//@import 'default/flexbox-grid';
+//01.Settings
+@import "style/settings/_all__";
 
+//02.Tools
+@import "style/tools/_all__";
+
+//03.Generic
+@import "style/generic/_all__";
+
+//04.Elements
+@import "style/elements/_all__";
+
+//05.Objects
+@import "style/objects/_all__";
+
+//06.Components
+@import './components/modal/index';
 @import './components/exanple/example';
+
+
+
+//07.Pages
+@import "./pages/animation/index";
+@import "./pages/modal/index";
+@import "./pages/tabs/index";
+
+
+
+//99.Utilities
+@import "style/utilities/_all__";

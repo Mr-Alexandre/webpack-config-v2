@@ -1,0 +1,26 @@
+$gridBreakpoints: (
+  "xs": 0,
+  "sm": 600,
+  "md": 768,
+  "lg": 1024,
+  "xl": 1280
+);
+
+$gridBreakpointsMax: (
+  "xs": 599,
+  "sm": 767,
+  "md": 1023,
+  "lg": 1279,
+  "xl": infinity
+);
+
+$gridContainers: (
+  "sm": 540,
+  "md": 720,
+  "lg": 960,
+  "xl": 1200
+);
+
+$gridColumns: 12 !default;
+$gridGap: 30 !default;
+$gridXsIndent: 24 !default;

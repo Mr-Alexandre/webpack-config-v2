@@ -1,0 +1,12 @@
+.#{generatePrefix($prefixUtilities)}color-white {
+  color: $color-white;
+}
+.#{generatePrefix($prefixUtilities)}color-black {
+  color: $color-black;
+}
+.#{generatePrefix($prefixUtilities)}color-gray {
+  color: $color-gray;
+}
+.#{generatePrefix($prefixUtilities)}color-main {
+  color: $color-main;
+}

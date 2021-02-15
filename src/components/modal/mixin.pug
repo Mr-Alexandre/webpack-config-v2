@@ -1,0 +1,27 @@
+mixin modal()
+    dialog&attributes(attributes).c-modal.js-modal
+        .c-modal__container.js-modalContainer
+            .c-modal__icon-close.js-modalClose
+                i Close
+
+            .c-modal__content.js-modalContent
+                header.c-modal__header
+                    h2 Title
+                .c-modal__body
+                    .c-modal__body-loader
+
+                footer.c-modal__footer
+                    button.js-modalClose Закрыть
+
+mixin modalConfirm()
+    dialog&attributes(attributes).c-modal.js-modal
+        .c-modal__container.js-modalContainer
+            .c-modal__content.js-modalContent
+                header.c-modal__header
+                    h2 Confirm modal
+                .c-modal__body
+                    .c-modal__body-loader
+
+                footer.c-modal__footer
+                    button.js-modalBtnAccept Ок
+                    button.js-modalBtnReject Отчема
