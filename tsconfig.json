@@ -9,7 +9,24 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "baseUrl": "src",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@modules/*": [
+        "src/scripts/modules/*"
+      ],
+      "@scenario/*": [
+        "src/scripts/scenario/*"
+      ],
+      "@tools/*": [
+        "src/scripts/tools/*"
+      ],
+      "@variables": [
+        "src/scripts/variables.ts"
+      ]
+    }
   },
   "exclude": [
     "node_modules"
