@@ -1,4 +1,3 @@
-import './index.pug';
 import './index.scss';
 
 import Example from './components/exanple/example';

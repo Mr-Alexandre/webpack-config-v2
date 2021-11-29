@@ -1,16 +1,22 @@
 {
     "compilerOptions": {
+      "baseUrl": "./",
       "outDir": "./dist/",
-      "noImplicitAny": true,
-      "module": "es6",
-      "target": "es5",
-      "allowJs": true,
-      "skipLibCheck": true,
+      "sourceMap": true,
+      "declaration": false,
+      "downlevelIteration": true,
+      "experimentalDecorators": true,
+      "module": "esnext",
       "moduleResolution": "node",
-      "sourceMap": true
+      "importHelpers": true,
+      "target": "es2015",
+      "allowSyntheticDefaultImports": true,
+      "lib": [
+        "dom",
+        "ESNext"
+      ]
     },
     "exclude": [
       "node_modules"
     ]
   }
-  
